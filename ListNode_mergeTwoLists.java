@@ -1,7 +1,7 @@
 package leetcode_easy;
 
 import java.util.List;
-
+// NodeList, MergeList, gelernt.
 public class ListNode {
 	     int val;
 	     ListNode next;
@@ -54,7 +54,8 @@ public class ListNode_mergeTwoLists {
 		ListNode mergedlist = mergeTwoLists(list1, list2);
 		
 		printlist(mergedlist);
-
+		printlist(list1);
+		printlist(list2);
 		
 
 		
