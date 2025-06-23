@@ -1,0 +1,39 @@
+import java.util.*;
+
+public class java94 {
+
+    static class TreeNode{
+        int val;
+        TreeNode left, right;
+        TreeNode(int x) { val = x;}
+    }
+
+    public static class Solution{
+        public List<Integer> inorderTraversal(TreeNode root){
+            List<Integer> result = new ArrayList<>();
+            traverse(root,result);
+            
+            return result;
+            
+        }
+        private void traverse(TreeNode node, List<Integer> res){
+            if(node == null){
+                return; //finish
+            }
+            traverse(node.left, res);
+            res.add(node.val);
+            traverse(node.right, res);
+        }
+    }
+
+    public static void main(String[] args) {
+        TreeNode root = new TreeNode(1);
+        root.right = new TreeNode(2);
+        root.right.left = new TreeNode(3);
+
+        Solution solution = new Solution();
+        List<Integer> output = solution.inorderTraversal(root);
+
+        System.out.println(output);
+    }
+}
