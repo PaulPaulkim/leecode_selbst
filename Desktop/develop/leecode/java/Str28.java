@@ -1,0 +1,21 @@
+public class Str28{
+    class Solution {
+        public int strStr(String haystack, String needle){
+            return haystack.indexOf(needle);
+
+        }
+    } 
+    
+    public static void main(String[] args) {
+        String str1 = "sadbutsad";
+        String str2 = "sad";
+        Str28 outer = new Str28();
+
+        Solution sol = outer.new Solution();
+
+        int result = sol.strStr(str1, str2);
+        System.out.println('\n');
+        System.out.println(result);
+        System.out.println('\n');
+    }
+}

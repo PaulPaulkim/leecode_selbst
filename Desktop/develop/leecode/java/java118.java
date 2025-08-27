@@ -1,0 +1,31 @@
+import java.util.ArrayList;
+import java.util.List;
+
+public class java118 {
+    public List<List<Integer>> generate(int numRows) {
+        List<List<Integer>> result = new ArrayList<>();
+        if (numRows >= 1) {
+            List<Integer> firstRow = new ArrayList<>();
+            firstRow.add(1);
+            result.add(firstRow);
+        }
+        if (numRows >= 2) {
+            List<Integer> secondRow = new ArrayList<>();
+            secondRow.add(1);
+            secondRow.add(1);
+            result.add(secondRow);
+        }
+        for (int i = 1; i < numRows - 1; i++) {
+            List<Integer> currentRow = new ArrayList<>();
+            currentRow.add(1);
+            List<Integer> previousRow = result.get(i);
+            for (int j = 1; j < previousRow.size(); j++) {
+                int sum = previousRow.get(j - 1) + previousRow.get(j);
+                currentRow.add(sum);
+            }
+            currentRow.add(1);
+            result.add(currentRow);
+        }
+        return result;
+    }
+}
