@@ -1,0 +1,262 @@
+88번
+public class Solution {
+    public void merge(int[] nums1, int m, int[] nums2, int n) {
+        int p1 = m - 1;          // nums1의 실제 값 끝 인덱스
+        int p2 = n - 1;          // nums2의 끝 인덱스
+        int p = m + n - 1;       // nums1의 총 배열 끝 인덱스
+
+        while (p1 >= 0 && p2 >= 0) {
+            if (nums1[p1] > nums2[p2]) {
+                nums1[p] = nums1[p1];
+                p1--;
+            } else {
+                nums1[p] = nums2[p2];
+                p2--;
+            }
+            p--;
+        }
+
+        // nums2에 남은 요소가 있을 경우 복사
+        while (p2 >= 0) {
+            nums1[p] = nums2[p2];
+            p2--;
+            p--;
+        }
+    }
+}
+
+94번
+import java.util.ArrayList;
+import java.util.List;
+
+public class Solution {
+    public List<Integer> inorderTraversal(TreeNode root) {
+        List<Integer> result = new ArrayList<>();
+        inorder(root, result);
+        return result;
+    }
+
+    private void inorder(TreeNode node, List<Integer> result) {
+        if (node == null) return;
+        inorder(node.left, result);      // 왼쪽 방문
+        result.add(node.val);            // 루트 방문
+        inorder(node.right, result);     // 오른쪽 방문
+    }
+}
+
+100번
+public class Solution {
+    public boolean isSameTree(TreeNode p, TreeNode q) {
+        // 둘 다 null이면 같음
+        if (p == null && q == null) return true;
+
+        // 하나만 null이거나 값이 다르면 다름
+        if (p == null || q == null || p.val != q.val) return false;
+
+        // 왼쪽과 오른쪽 서브트리 비교
+        return isSameTree(p.left, q.left) && isSameTree(p.right, q.right);
+    }
+}
+101번
+public class Solution {
+    public boolean isSymmetric(TreeNode root) {
+        if (root == null) return true;
+        return isMirror(root.left, root.right);
+    }
+
+    private boolean isMirror(TreeNode t1, TreeNode t2) {
+        // 둘 다 null이면 대칭
+        if (t1 == null && t2 == null) return true;
+
+        // 하나만 null이거나 값이 다르면 대칭 아님
+        if (t1 == null || t2 == null || t1.val != t2.val) return false;
+
+        // 바깥쪽끼리 + 안쪽끼리 비교
+        return isMirror(t1.left, t2.right) && isMirror(t1.right, t2.left);
+    }
+}
+
+104번
+
+public class Solution {
+    public int maxDepth(TreeNode root) {
+        if (root == null) return 0;
+
+        int leftDepth = maxDepth(root.left);
+        int rightDepth = maxDepth(root.right);
+
+        return Math.max(leftDepth, rightDepth) + 1;
+    }
+}
+
+108번
+public class Solution {
+    public TreeNode sortedArrayToBST(int[] nums) {
+        return helper(nums, 0, nums.length - 1);
+    }
+
+    private TreeNode helper(int[] nums, int left, int right) {
+        if (left > right) return null;
+
+        int mid = left + (right - left) / 2;  // 가운데 원소 선택
+        TreeNode root = new TreeNode(nums[mid]);
+
+        root.left = helper(nums, left, mid - 1);     // 왼쪽 부분 배열로 재귀
+        root.right = helper(nums, mid + 1, right);   // 오른쪽 부분 배열로 재귀
+
+        return root;
+    }
+}
+110번
+public class Solution {
+    public boolean isBalanced(TreeNode root) {
+        return checkHeight(root) != -1;
+    }
+
+    private int checkHeight(TreeNode node) {
+        if (node == null) return 0;
+
+        int left = checkHeight(node.left);
+        if (left == -1) return -1;
+
+        int right = checkHeight(node.right);
+        if (right == -1) return -1;
+
+        if (Math.abs(left - right) > 1) return -1;
+
+        return Math.max(left, right) + 1;
+    }
+}
+111번
+
+public class Solution {
+    public int minDepth(TreeNode root) {
+        if (root == null) return 0;
+
+        // 한 쪽 자식이 없는 경우는 반드시 다른 쪽을 따라가야 함
+        if (root.left == null) return minDepth(root.right) + 1;
+        if (root.right == null) return minDepth(root.left) + 1;
+
+        return Math.min(minDepth(root.left), minDepth(root.right)) + 1;
+    }
+}
+
+112번
+public class Solution {
+    public boolean hasPathSum(TreeNode root, int targetSum) {
+        if (root == null) return false;
+
+        // 리프 노드일 경우, 값이 targetSum과 같은지 확인
+        if (root.left == null && root.right == null) {
+            return targetSum == root.val;
+        }
+
+        // 왼쪽과 오른쪽 서브트리로 재귀적으로 확인
+        int newTarget = targetSum - root.val;
+        return hasPathSum(root.left, newTarget) || hasPathSum(root.right, newTarget);
+    }
+}
+118번
+import java.util.ArrayList;
+import java.util.List;
+
+public class Solution {
+    public List<List<Integer>> generate(int numRows) {
+        List<List<Integer>> triangle = new ArrayList<>();
+
+        for (int i = 0; i < numRows; i++) {
+            List<Integer> row = new ArrayList<>();
+
+            for (int j = 0; j <= i; j++) {
+                if (j == 0 || j == i) {
+                    row.add(1); // 처음과 끝은 항상 1
+                } else {
+                    int val = triangle.get(i - 1).get(j - 1) + triangle.get(i - 1).get(j);
+                    row.add(val); // 위의 두 수의 합
+                }
+            }
+
+            triangle.add(row);
+        }
+
+        return triangle;
+    }
+}
+
+119번
+import java.util.ArrayList;
+import java.util.List;
+
+public class Solution {
+    public List<Integer> getRow(int rowIndex) {
+        List<Integer> row = new ArrayList<>();
+        row.add(1); // 첫 번째 값은 항상 1
+
+        for (int i = 1; i <= rowIndex; i++) {
+            // 뒤에서부터 갱신 (덮어쓰지 않기 위해)
+            for (int j = row.size() - 1; j >= 1; j--) {
+                row.set(j, row.get(j) + row.get(j - 1));
+            }
+            row.add(1); // 마지막에 항상 1 추가
+        }
+
+        return row;
+    }
+}
+121번
+public class Solution {
+    public int maxProfit(int[] prices) {
+        int minPrice = Integer.MAX_VALUE;
+        int maxProfit = 0;
+
+        for (int price : prices) {
+            if (price < minPrice) {
+                minPrice = price; // 더 낮은 가격 발견
+            } else {
+                maxProfit = Math.max(maxProfit, price - minPrice);
+            }
+        }
+
+        return maxProfit;
+    }
+}
+125번
+public class Solution {
+    public boolean isPalindrome(String s) {
+        int left = 0, right = s.length() - 1;
+
+        while (left < right) {
+            // 왼쪽 포인터가 영숫자가 아니면 오른쪽으로 이동
+            while (left < right && !Character.isLetterOrDigit(s.charAt(left))) {
+                left++;
+            }
+            // 오른쪽 포인터가 영숫자가 아니면 왼쪽으로 이동
+            while (left < right && !Character.isLetterOrDigit(s.charAt(right))) {
+                right--;
+            }
+
+            // 대소문자 구분 없이 비교
+            if (Character.toLowerCase(s.charAt(left)) != Character.toLowerCase(s.charAt(right))) {
+                return false;
+            }
+
+            left++;
+            right--;
+        }
+
+        return true;
+    }
+}
+136번
+public class Solution {
+    public int singleNumber(int[] nums) {
+        int result = 0;
+
+        for (int num : nums) {
+            result ^= num; // XOR 연산: 같은 수 두 번 XOR하면 0, 0과 XOR하면 자기 자신
+        }
+
+        return result;
+    }
+}
+
